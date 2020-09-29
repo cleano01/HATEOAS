@@ -1,10 +1,14 @@
 const { TeacherModel } = require("../database/index");
-
+const teacherHateoas = require("../helpers/hateoas/teacherHateoas");
 class TeacherController {
   async index(req, res) {
     try {
       const teachers = await TeacherModel.findAll({});
-      res.json({ teachers });
+
+      const { id } = teachers[0];
+      const hateoas = teacherHateoas.hateoas(id);
+
+      return res.json({ teachers, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.maps((err) => err.message),
@@ -15,7 +19,11 @@ class TeacherController {
   async store(req, res) {
     try {
       const teacher = await TeacherModel.create(req.body);
-      return res.json({ teacher });
+      const { id } = teacher;
+
+      const hateoas = teacherHateoas.hateoas(id);
+
+      return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.maps((err) => err.message),
@@ -32,6 +40,7 @@ class TeacherController {
           errors: ["Missing id"],
         });
       }
+      const hateoas = teacherHateoas.hateoas(id);
 
       const teacher = await TeacherModel.findByPk(id);
 
@@ -41,7 +50,7 @@ class TeacherController {
         });
       }
 
-      return res.json({ teacher });
+      return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.maps((err) => err.message),
@@ -58,6 +67,7 @@ class TeacherController {
           errors: ["Missing id"],
         });
       }
+      const hateoas = teacherHateoas.hateoas(id);
 
       const teacher = await TeacherModel.findByPk(id);
 
@@ -67,7 +77,7 @@ class TeacherController {
         });
       }
       const updatedTeacher = await teacher.update(req.body);
-      return res.json({ updatedTeacher });
+      return res.json({ updatedTeacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.maps((err) => err.message),
@@ -84,6 +94,7 @@ class TeacherController {
           errors: ["Missing id"],
         });
       }
+      const hateoas = teacherHateoas.hateoas(id);
 
       const teacher = await TeacherModel.findByPk(id);
 
@@ -95,7 +106,7 @@ class TeacherController {
 
       await teacher.destroy();
 
-      return res.json({ deleteTeacher: teacher });
+      return res.json({ deleteTeacher: teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
         errors: error.errors.maps((err) => err.message),
