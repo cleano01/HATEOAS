@@ -9,6 +9,7 @@ const dataBase = require("./src/database");
 class App {
   constructor() {
     this.app = express();
+    this.app.use(express.json());
     this.routes();
   }
 
