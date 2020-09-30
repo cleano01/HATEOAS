@@ -1,6 +1,8 @@
+require("dotenv").config();
+
 class teacherHateoas {
   constructor() {
-    this.baseUrl = "http://localhost:3000";
+    this.baseUrl = `http://localhost:${process.env.PORT}`;
   }
   hateoas(id) {
     const structure = [
