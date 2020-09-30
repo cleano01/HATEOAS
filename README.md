@@ -12,6 +12,11 @@ Simple API with the HATEOAS structure, to make the API resource available to be 
 
       NPM >= 6.14.8
 
+* .Env:
+
+      Rename the "env.example" file to ".env" and enter the settings.
+
+
 
 #### Installation
 -----------------
