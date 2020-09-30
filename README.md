@@ -11,4 +11,12 @@ Simple API with the HATEOAS structure, to make the API resource available to be 
 * Npm version:
 
       NPM >= 6.14.8
+      
+
+#### Execution
+-----------------
+*In the project directory, execute the command below:
+
+      npm run dev
+      
 
