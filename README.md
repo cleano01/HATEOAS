@@ -27,6 +27,10 @@ Simple API with the HATEOAS structure, to make the API resource available to be 
 
 #### Execution
 -----------------
+* populate the database, execute the command below:
+
+      npx sequelize db:seed:all
+      
 * In the project directory, execute the command below:
 
       npm run dev
