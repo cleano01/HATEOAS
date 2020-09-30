@@ -15,7 +15,7 @@ Simple API with the HATEOAS structure, to make the API resource available to be 
 
 #### Execution
 -----------------
-*In the project directory, execute the command below:
+* In the project directory, execute the command below:
 
       npm run dev
       
