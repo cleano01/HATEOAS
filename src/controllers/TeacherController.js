@@ -11,7 +11,7 @@ class TeacherController {
       return res.json({ teachers, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        errors: error.errors.maps((err) => err.message),
+        error: error.errors.map((err) => err.message),
       });
     }
   }
@@ -26,7 +26,7 @@ class TeacherController {
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        errors: error.errors.maps((err) => err.message),
+        error: error.errors.map((err) => err.message),
       });
     }
   }
@@ -53,7 +53,7 @@ class TeacherController {
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        errors: error.errors.maps((err) => err.message),
+        error: error.errors.map((err) => err.message),
       });
     }
   }
@@ -80,7 +80,7 @@ class TeacherController {
       return res.json({ updatedTeacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        errors: error.errors.maps((err) => err.message),
+        error: error.errors.map((err) => err.message),
       });
     }
   }
@@ -109,7 +109,7 @@ class TeacherController {
       return res.json({ deleteTeacher: teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        errors: error.errors.maps((err) => err.message),
+        error: error.errors.map((err) => err.message),
       });
     }
   }
