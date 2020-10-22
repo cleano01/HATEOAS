@@ -1,5 +1,7 @@
 const { TeacherModel } = require("../database/index");
 const teacherHateoas = require("../helpers/hateoas/teacherHateoas");
+const cache = require("../helpers/cache/cache");
+
 class TeacherController {
   async index(req, res) {
     try {
@@ -35,13 +37,15 @@ class TeacherController {
     try {
       const { id } = req.params;
 
+      const cached = await cache.get(id)
+      if(cached){return res.json(cached)}
+
       if (!id) {
         return res.status(400).json({
           errors: ["Missing id"],
         });
       }
       const hateoas = teacherHateoas.hateoas(id);
-
       const teacher = await TeacherModel.findByPk(id);
 
       if (!teacher) {
@@ -49,11 +53,11 @@ class TeacherController {
           errors: ["Teacher does not exist"],
         });
       }
-
+      cache.set(id, { teacher, _link: hateoas });
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
-        error: error.errors.map((err) => err.message),
+        error: error.errors.map((err) => err),
       });
     }
   }
@@ -103,9 +107,7 @@ class TeacherController {
           errors: ["Teacher does not exist"],
         });
       }
-
       await teacher.destroy();
-
       return res.json({ deleteTeacher: teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({
@@ -114,5 +116,4 @@ class TeacherController {
     }
   }
 }
-
 module.exports = new TeacherController();
