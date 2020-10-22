@@ -1,4 +1,4 @@
-const {redis} =  require('../../config/redis_config')
+const {redis} =  require('../../config/redisConfig')
 
 class Cache {
   constructor(){
@@ -18,7 +18,8 @@ class Cache {
 
   set(key, value, timeExp=60 * 15){ 
     try {
-      return this.redis.set(key, JSON.stringify(value),"EX", timeExp);
+      return this.redis.set(key, JSON.stringify(value),
+      "EX", timeExp);
     } catch (error) { 
       return res.status(400).json({
         error: error.errors.map((err) => err),
@@ -27,15 +28,25 @@ class Cache {
   }
 
   del(key){
-    return this.redis.del(key);
+    try {
+      return this.redis.del(key);     
+    } catch (error) {
+      return res.status(400).json({
+        error: error.errors.map((err) => err),
+      });      
+    }
   }
 
   async delPrefix(prefix){
-    const keys = (await this.redis.keys(`cache:${prefix}:*`)).map((key) =>{
-      key.replace("cache:", "");
-    })
+    try {
+      const keys = (await this.redis.keys(`cache:${prefix}:*`)).map((key) =>{
+        key.replace("cache:", "");
+      });
+    } catch (error) {
+      return res.status(400).json({
+        error: error.errors.map((err) => err),
+      });
+    }    
   }
-
 }
-
 module.exports = new Cache();
