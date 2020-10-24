@@ -7,6 +7,7 @@ class Cache {
 
   async get(key){
     try {
+      
       const value = await this.redis.get(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
@@ -19,7 +20,7 @@ class Cache {
   set(key, value, timeExp=60 * 15){ 
     try {
       return this.redis.set(key, JSON.stringify(value),
-      "EX", timeExp);
+              "EX", timeExp);
     } catch (error) { 
       return res.status(400).json({
         error: error.errors.map((err) => err),
