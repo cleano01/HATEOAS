@@ -33,6 +33,7 @@ class TeacherController {
           errors: ["Missing id"],
         });
       }
+
       const hateoas = teacherHateoas.hateoas(id);
       const teacher = await TeacherModel.findByPk(id);
       if (!teacher) {
@@ -40,9 +41,11 @@ class TeacherController {
           errors: ["Teacher does not exist"],
         });
       }
+
       const cached = await cache.get(id);
       if(cached){return res.json(cached);}      
       cache.set(id, { teacher, _link: hateoas });
+      
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({error: error.message});
