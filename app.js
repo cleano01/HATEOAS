@@ -1,5 +1,4 @@
-const dotenv = require("dotenv");
-dotenv.config;
+require('./bootstrap');
 
 const express = require("express");
 const TeacherRoute = require("./src/routes/TeacherRoute");
