@@ -17,4 +17,5 @@ const db = {
   sequelize,
 };
 
+
 module.exports = db;
