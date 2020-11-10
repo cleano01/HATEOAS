@@ -1,13 +1,13 @@
 require('../../bootstrap');
 
-const dev_environment = {
+const dev_db_environment = {
   dialect: process.env.DIALECT,
   host: process.env.DATABASE_HOST,
   port: process.env.DATABASE_PORT,
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE,
-  storage: './__tests__/database.sqlite',
+  logging:false,
   define: {
     timestamps: true,
     underscored: true,
@@ -21,9 +21,10 @@ const dev_environment = {
   timezone:  "America/Sao_Paulo",
 }
 
-const test_environment = {
+const test_db_environment = {
   dialect: 'sqlite',
   storage: './__tests__/database.sqlite',
+  logging:false,
   define: {
     timestamps: true,
     underscored: true,
@@ -34,7 +35,8 @@ const test_environment = {
 }
 
 const check_environment = (() =>{
-  const environment= process.env.NODE_ENV === "test" ? test_environment : dev_environment;
+  const environment= process.env.NODE_ENV === "test" ? 
+  test_db_environment : dev_db_environment;
   return environment;
 })
 
