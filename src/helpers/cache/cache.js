@@ -6,8 +6,7 @@ class Cache {
   }
 
   async get(key){
-    try {
-      
+    try {      
       const value = await this.redis.get(key);
       return value ? JSON.parse(value) : null;
     } catch (error) {
