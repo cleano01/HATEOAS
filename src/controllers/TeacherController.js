@@ -1,6 +1,6 @@
-const { TeacherModel } = require("../database/index");
-const teacherHateoas = require("../helpers/hateoas/teacherHateoas");
-const cache = require("../helpers/cache/cache");
+const { TeacherModel } = require('../database/index');
+const teacherHateoas = require('../helpers/hateoas/teacherHateoas');
+const cache = require('../helpers/cache/cache');
 
 class TeacherController {
   async index(req, res) {
@@ -10,7 +10,7 @@ class TeacherController {
       const hateoas = teacherHateoas.hateoas(id);
       return res.json({ teachers, _link: hateoas });
     } catch (error) {
-      return res.status(400).json({error: error.message});
+      return res.status(400).json({ error: error.message });
     }
   }
 
@@ -21,7 +21,7 @@ class TeacherController {
       const hateoas = teacherHateoas.hateoas(id);
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
-      return res.status(400).json({error: error.message});
+      return res.status(400).json({ error: error.message });
     }
   }
 
@@ -30,25 +30,23 @@ class TeacherController {
       const { id } = req.params;
       if (!id) {
         return res.status(400).json({
-          errors: ["Missing id"],
+          errors: ['Missing id'],
         });
       }
-
       const hateoas = teacherHateoas.hateoas(id);
       const teacher = await TeacherModel.findByPk(id);
       if (!teacher) {
         return res.status(400).json({
-          errors: ["Teacher does not exist"],
+          errors: ['Teacher does not exist'],
         });
       }
-
       const cached = await cache.get(id);
-      if(cached){return res.json(cached);}      
+      if (cached) { return res.json(cached); }
       cache.set(id, { teacher, _link: hateoas });
-      
+
       return res.json({ teacher, _link: hateoas });
     } catch (error) {
-      return res.status(400).json({error: error.message});
+      return res.status(400).json({ error: error.message });
     }
   }
 
@@ -57,26 +55,22 @@ class TeacherController {
       const { id } = req.params;
       if (!id) {
         return res.status(400).json({
-          errors: ["Missing id"],
+          errors: ['Missing id'],
         });
       }
-
       const hateoas = teacherHateoas.hateoas(id);
       const teacher = await TeacherModel.findByPk(id);
-
       if (!teacher) {
         return res.status(400).json({
-          errors: ["Teacher does not exist"],
+          errors: ['Teacher does not exist'],
         });
-      }      
-
+      }
       const updatedTeacher = await teacher.update(req.body);
       const cached = await cache.get(id);
-      if(cached){cache.set(id, { updatedTeacher, _link: hateoas }); }
-
+      if (cached) { cache.set(id, { updatedTeacher, _link: hateoas }); }
       return res.json({ updatedTeacher, _link: hateoas });
     } catch (error) {
-      return res.status(400).json({error: error.message});
+      return res.status(400).json({ error: error.message });
     }
   }
 
@@ -85,26 +79,21 @@ class TeacherController {
       const { id } = req.params;
       if (!id) {
         return res.status(400).json({
-          errors: ["Missing id"],
+          errors: ['Missing id'],
         });
       }
-
       const hateoas = teacherHateoas.hateoas(id);
       const teacher = await TeacherModel.findByPk(id);
-
       if (!teacher) {
         return res.status(400).json({
-          errors: ["Teacher does not exist"],
+          errors: ['Teacher does not exist'],
         });
       }
-
       cache.del(id);
       await teacher.destroy();
-
-      return res.json({ deleteTeacher: teacher,
-      _link: hateoas });
+      return res.json({ deleteTeacher: teacher, _link: hateoas });
     } catch (error) {
-      return res.status(400).json({error: error.message});
+      return res.status(400).json({ error: error.message });
     }
   }
 }
