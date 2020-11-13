@@ -1,17 +1,12 @@
-const TeacherController = require("../controllers/TeacherController");
-const express = require("express");
+const express = require('express');
+const TeacherController = require('../controllers/TeacherController');
 
 const router = express.Router();
 
-router.get("/", TeacherController.index);
-router.post("/", TeacherController.store);
-router.get("/:id", TeacherController.show);
-router.put("/:id", TeacherController.update);
-router.delete("/:id", TeacherController.delete);
-router.post("/test", (req, res)=>{
-  console.log(req.body)
-  return res.json({id: 1})
-});
-
+router.get('/', TeacherController.index);
+router.post('/', TeacherController.store);
+router.get('/:id', TeacherController.show);
+router.put('/:id', TeacherController.update);
+router.delete('/:id', TeacherController.delete);
 
 module.exports = router;
