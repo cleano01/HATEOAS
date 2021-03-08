@@ -90,9 +90,10 @@ class TeacherController {
           errors: ['Teacher does not exist'],
         });
       }
-      const hateoas = teacherHateoas.hateoas(id);
       cache.del(id);
       destroyTeacher(teacher);
+      const hateoas = teacherHateoas.hateoas(id);
+
       return res.json({ deleteTeacher: teacher, _link: hateoas });
     } catch (error) {
       return res.status(400).json({ error: error.message });
