@@ -1,12 +1,12 @@
 const { TeacherModel } = require('../database/index');
-const { getAllTeachers } = require('../repository/teacherRepository');
+const { getAllTeachers, createTeacher } = require('../repository/teacherRepository');
 const teacherHateoas = require('../helpers/hateoas/teacherHateoas');
 const cache = require('../helpers/cache/cache');
 
 class TeacherController {
   async index(req, res) {
     try {
-      const teachers = getAllTeachers();
+      const teachers = await getAllTeachers();
       const { id } = teachers[0];
       const hateoas = teacherHateoas.hateoas(id);
       return res.json({ teachers, _link: hateoas });
@@ -17,7 +17,7 @@ class TeacherController {
 
   async store(req, res) {
     try {
-      const teacher = await TeacherModel.create(req.body);
+      const teacher = await createTeacher(req.body);
       const { id } = teacher;
       const hateoas = teacherHateoas.hateoas(id);
       return res.json({ teacher, _link: hateoas });

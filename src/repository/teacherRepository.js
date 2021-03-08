@@ -5,6 +5,12 @@ const getAllTeachers = () => {
   return teachers;
 };
 
+const createTeacher = (body) => {
+  const teacher = TeacherModel.create(body);
+  return teacher;
+};
+
 module.exports = {
   getAllTeachers,
+  createTeacher,
 };
