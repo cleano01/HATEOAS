@@ -1,11 +1,12 @@
 const { TeacherModel } = require('../database/index');
+const { getAllTeachers } = require('../repository/teacherRepository');
 const teacherHateoas = require('../helpers/hateoas/teacherHateoas');
 const cache = require('../helpers/cache/cache');
 
 class TeacherController {
   async index(req, res) {
     try {
-      const teachers = await TeacherModel.findAll({});
+      const teachers = getAllTeachers();
       const { id } = teachers[0];
       const hateoas = teacherHateoas.hateoas(id);
       return res.json({ teachers, _link: hateoas });
