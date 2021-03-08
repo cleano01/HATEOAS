@@ -1,5 +1,7 @@
 const { TeacherModel } = require('../database/index');
-const { getAllTeachers, createTeacher } = require('../repository/teacherRepository');
+const {
+  getAllTeachers, createTeacher, getTeacher, updateTeacher,
+} = require('../repository/teacherRepository');
 const teacherHateoas = require('../helpers/hateoas/teacherHateoas');
 const cache = require('../helpers/cache/cache');
 
@@ -34,13 +36,13 @@ class TeacherController {
           errors: ['Missing id'],
         });
       }
-      const hateoas = teacherHateoas.hateoas(id);
-      const teacher = await TeacherModel.findByPk(id);
+      const teacher = await getTeacher(id);
       if (!teacher) {
         return res.status(400).json({
           errors: ['Teacher does not exist'],
         });
       }
+      const hateoas = teacherHateoas.hateoas(id);
       const cached = await cache.get(id);
       if (cached) { return res.json(cached); }
       cache.set(id, { teacher, _link: hateoas });
@@ -59,14 +61,14 @@ class TeacherController {
           errors: ['Missing id'],
         });
       }
-      const hateoas = teacherHateoas.hateoas(id);
-      const teacher = await TeacherModel.findByPk(id);
+      const teacher = await getAllTeachers(id);
       if (!teacher) {
         return res.status(400).json({
           errors: ['Teacher does not exist'],
         });
       }
-      const updatedTeacher = await teacher.update(req.body);
+      const updatedTeacher = await updateTeacher(req.body);
+      const hateoas = teacherHateoas.hateoas(id);
       const cached = await cache.get(id);
       if (cached) { cache.set(id, { updatedTeacher, _link: hateoas }); }
       return res.json({ updatedTeacher, _link: hateoas });
