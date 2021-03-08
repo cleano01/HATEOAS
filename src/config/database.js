@@ -7,7 +7,7 @@ const dev_db_environment = {
   username: process.env.DATABASE_USERNAME,
   password: process.env.DATABASE_PASSWORD,
   database: process.env.DATABASE,
-  logging:false,
+  logging: false,
   define: {
     timestamps: true,
     underscored: true,
@@ -15,29 +15,29 @@ const dev_db_environment = {
     createdAt: "created_at",
     updatedAt: "updated_at",
   },
-   dialectOptions: {
-    timezone:  "America/Sao_Paulo",
+  dialectOptions: {
+    timezone: "America/Sao_Paulo",
   },
-  timezone:  "America/Sao_Paulo",
-}
+  timezone: "America/Sao_Paulo",
+};
 
 const test_db_environment = {
   dialect: 'sqlite',
   storage: './__tests__/database.sqlite',
-  logging:false,
+  logging: false,
   define: {
     timestamps: true,
     underscored: true,
     underscoredAll: true,
     createdAt: "created_at",
     updatedAt: "updated_at",
-  }
-}
+  },
+};
 
-const check_environment = (() =>{
-  const environment= process.env.NODE_ENV === "test" ? 
-  test_db_environment : dev_db_environment;
+const check_environment = (() => {
+  const environment = process.env.NODE_ENV === "test"
+    ? test_db_environment : dev_db_environment;
   return environment;
-})
+});
 
 module.exports = check_environment();
