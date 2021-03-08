@@ -1,4 +1,3 @@
-const { TeacherModel } = require('../database/index');
 const {
   getAllTeachers, createTeacher, getTeacher, updateTeacher, destroyTeacher,
 } = require('../repository/teacherRepository');
