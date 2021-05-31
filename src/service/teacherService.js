@@ -1,27 +1,21 @@
 const { teacherRepository } = require('../repository');
-const { teacherService } = require('../service');
+
 const teacherHateoas = require('../helpers/hateoas/teacherHateoas');
 const cache = require('../helpers/cache/cache');
 
-class TeacherController {
-  async index(req, res) {
-    try {
-      const response = await teacherService.index();
-      return res.json(response);
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+class TeacherService {
+  async index() {
+    const teachers = await teacherRepository.getAllTeachers();
+    const { id } = teachers[0];
+    const hateoas = teacherHateoas.hateoas(id);
+    return { teachers, _link: hateoas };
   }
 
-  async store(req, res) {
-    try {
-      const teacher = await teacherRepository.createTeacher(req.body);
-      const { id } = teacher;
-      const hateoas = teacherHateoas.hateoas(id);
-      return res.json({ teacher, _link: hateoas });
-    } catch (error) {
-      return res.status(400).json({ error: error.message });
-    }
+  async store(data) {
+    const teacher = await teacherRepository.createTeacher(data);
+    const { id } = teacher;
+    const hateoas = teacherHateoas.hateoas(id);
+    return { teacher, _link: hateoas };
   }
 
   async show(req, res) {
@@ -97,4 +91,4 @@ class TeacherController {
     }
   }
 }
-module.exports = new TeacherController();
+module.exports = new TeacherService();
