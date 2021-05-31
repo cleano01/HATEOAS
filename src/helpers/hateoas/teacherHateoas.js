@@ -4,6 +4,7 @@ class teacherHateoas {
   constructor() {
     this.baseUrl = `http://localhost:${process.env.PORT}`;
   }
+
   hateoas(id) {
     const structure = [
       {
