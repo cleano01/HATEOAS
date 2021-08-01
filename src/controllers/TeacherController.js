@@ -1,10 +1,11 @@
+const httpStatus = require('http-status');
 const { teacherService } = require('../service');
 
 class TeacherController {
   async index(req, res) {
     try {
       const response = await teacherService.index();
-      return res.json(response);
+      return res.status(httpStatus.OK).json(response);
     } catch (error) {
       return res.status(400).json({ error: error.message });
     }
