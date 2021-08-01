@@ -1,5 +1,7 @@
-require('../../bootstrap');
+/* eslint-disable import/no-unresolved */
+require('../../../bootstrap');
 
+// eslint-disable-next-line camelcase
 const dev_db_environment = {
   dialect: process.env.DIALECT,
   host: process.env.DATABASE_HOST,
@@ -21,6 +23,7 @@ const dev_db_environment = {
   timezone: "America/Sao_Paulo",
 };
 
+// eslint-disable-next-line camelcase
 const test_db_environment = {
   dialect: 'sqlite',
   storage: './__tests__/database.sqlite',
@@ -33,10 +36,11 @@ const test_db_environment = {
     updatedAt: "updated_at",
   },
 };
+console.log('aqui -:>', { test_db_environment });
 
+// eslint-disable-next-line camelcase
 const check_environment = (() => {
-  const environment = process.env.NODE_ENV === "test"
-    ? test_db_environment : dev_db_environment;
+  const environment = process.env.NODE_ENV === "test" ? test_db_environment : dev_db_environment;
   return environment;
 });
 

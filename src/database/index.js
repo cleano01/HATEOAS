@@ -1,5 +1,6 @@
 const Sequelize = require("sequelize");
-const dataBaseConfig = require("../config/database");
+const dataBaseConfig = require("../common/config/database");
+
 const sequelize = new Sequelize(dataBaseConfig);
 
 const Teacher = require("../models/Teacher")(sequelize, Sequelize);
@@ -16,6 +17,5 @@ const db = {
   ...models,
   sequelize,
 };
-
 
 module.exports = db;

@@ -1,5 +1,5 @@
 const { teacherRepository } = require('../repository');
-const { hateoas, cache } = require('../helpers');
+const { hateoas, cache } = require('../common/helpers');
 
 class TeacherService {
   async index() {
