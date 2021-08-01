@@ -36,7 +36,6 @@ const test_db_environment = {
     updatedAt: "updated_at",
   },
 };
-console.log('aqui -:>', { test_db_environment });
 
 // eslint-disable-next-line camelcase
 const check_environment = (() => {
